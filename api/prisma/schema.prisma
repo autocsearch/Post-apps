@@ -19,6 +19,16 @@ model User {
   updatedAt DateTime @updatedAt
 
   username String
-  email    String @unique
+  email    String  @unique
   password String
+  Token    Token[]
+}
+
+model Token {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  expiredAt DateTime
 }

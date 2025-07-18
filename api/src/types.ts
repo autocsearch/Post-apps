@@ -1,4 +1,5 @@
-import { z } from "zod";
+import { describe } from "node:test";
+import { string, z } from "zod";
 
 export const regis = z.object({
   username: z.string().min(1, { message: "username is required" }),
@@ -10,3 +11,9 @@ export const login = z.object({
   email: z.string().min(1, { message: "email or password is wrong" }).email(),
   password: z.string().min(8, { message: "email or password is Wrong" }),
 });
+
+export const createPost = {
+  title: z.string().min(1, { message: "there must be a title" }),
+  description: z.string().min(1, { message: "there must be a description" }),
+  imageUrl: z.string(),
+};

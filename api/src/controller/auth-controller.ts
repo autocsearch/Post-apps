@@ -81,7 +81,7 @@ export async function Login(req: Request, res: Response) {
     const token = jwt.sign(jwtPayload, process.env.JWT_SECRET_KEY as string, { expiresIn: "15m" });
 
     // store the token in prisma
-    // Reason: to protect user copy tha last token after they logged out
+    // Reason: to protect user copy the last token after they logged out
     await prisma.token.create({
       data: {
         token,

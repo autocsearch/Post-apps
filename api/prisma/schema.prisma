@@ -18,10 +18,11 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  username String
+  username String  @unique
   email    String  @unique
   password String
   Token    Token[]
+  Post     Post[]
 }
 
 model Token {
@@ -31,4 +32,20 @@ model Token {
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   expiredAt DateTime
+}
+
+model Post {
+  id          String @id @default(uuid())
+  title       String
+  description String
+  imageUrl    String
+
+  views Int @default(0)
+  likes Int @default(0)
+
+  authorid String
+  author   User   @relation(fields: [authorid], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

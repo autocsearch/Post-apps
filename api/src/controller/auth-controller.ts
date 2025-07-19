@@ -1,14 +1,14 @@
 import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
 import { hash, genSalt, compare } from "bcrypt";
-import { login, regis } from "../types";
+import { loginSchema, regisSchema } from "../types/schema";
 import jwt from "jsonwebtoken";
 
 const prisma = new PrismaClient();
 
 export async function Register(req: Request, res: Response) {
   try {
-    const parsedData = regis.parse(req.body);
+    const parsedData = regisSchema.parse(req.body);
     const { username, email, password } = parsedData;
     const salt = await genSalt(10);
     const hashedPass = await hash(password, salt);
@@ -55,7 +55,7 @@ export async function Register(req: Request, res: Response) {
 
 export async function Login(req: Request, res: Response) {
   try {
-    const rawData = login.parse(req.body);
+    const rawData = loginSchema.parse(req.body);
     const { email, password } = rawData;
     if (!email || !password) {
       return res.status(404).json({ message: "user not found" });
